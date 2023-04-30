@@ -15,7 +15,6 @@ function Quiz(){
   const [clicked, setclicked] = useState(false)
   const [pass, setPass] = useState<null | boolean | string>(null)
   const [wrongAnswer, setWrongAnswer] = useState(0)
-  const [pop,setpop] = useState<boolean>(false)
   useEffect(() => {
     const interval = setInterval(() => {
       if (seconds <= 0) {
@@ -66,12 +65,13 @@ function Quiz(){
     }
     setclicked(true)
   };
-  let popover = ()=>{
-    setpop(true)
-  }
-  let oncancelpop = ()=>{
-    setpop(false)
-  }
+  let content =(
+    <div>
+    <Rate count={3} defaultValue={1} /><label>1 Easy</label><br/>
+    <Rate count={3} defaultValue={2} /><label>2 Medium</label><br/>
+    <Rate count={3} defaultValue={3} /><label>3 Hard</label>
+    </div>
+  ) 
   console.log({selectedOption, pass})
   return (
     <div className='contain-quiz'>
@@ -82,8 +82,9 @@ function Quiz(){
             <span><FieldTimeOutlined />{seconds} seconds</span>
           </div>
           <div className='second-row'>
-          <Rate defaultValue={1} count={3} onChange={popover}/>
-          <Modal open={pop} footer={null} onCancel={oncancelpop}></Modal>
+            <Popover content={content} trigger="hover" placement='topLeft'>
+              <p><Rate defaultValue={2} count={3}/></p>
+          </Popover>
             <span className='question'>{questions[currentQuestionIndex].question.split(" ").sort()}</span>
           </div>
           <Row gutter={[8, 8]} style={{
