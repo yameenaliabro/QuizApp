@@ -1,0 +1,77 @@
+.contain-quiz{
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    text-align: center; 
+    flex-wrap: wrap;
+    margin-top: 10px;
+    }
+    .app{
+        width: 1000px;
+        height: 700px;
+        border-radius: 10px;
+        background-color: #efefef;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+    .first-row{
+        display: flex;
+        margin: 20px 0px 0px 10px;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+    .second-row{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap; 
+        width: 90%;
+        margin-top:10px;
+    }
+    .second-row span{
+        font-style: italic;
+        line-break: anywhere;
+        margin-left: 10px;
+    }
+    .question{
+    font-weight: 200;
+    font-size: 15px;
+    margin:50px 0px 0px 50px
+    }
+    .fourth-row{
+    width: 800px;
+    margin: 20px 0px 0px 100px;
+    height: auto;
+    }
+    .next-button{
+        margin-top: 60px;
+    }
+    .next-button p{
+        font-size: 40px;
+        font-weight: bolder;
+        margin-top: 40px;
+        color: red;
+    }
+    .next-button > .sucess{
+        font-size: 40px;
+        font-weight: bolder;
+        margin-top: 40px;
+        color: green;
+    }
+    .quiz-result{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .next-button button{
+        background-color: #384358;  
+        width: 240px;
+        height: 50px;
+        font-weight: 700;
+        color: #fff;
+    }
