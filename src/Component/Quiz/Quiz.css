@@ -4,35 +4,39 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
     text-align: center; 
     flex-wrap: wrap;
-    margin-top: 10px;
     }
     .app{
         width: 1000px;
-        height: 700px;
+        height: 750px;
         border-radius: 10px;
         background-color: #efefef;
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
     }
+    .bar{
+        width: 500px;
+        margin-left: 10px;
+    }
     .first-row{
         display: flex;
-        margin: 20px 0px 0px 10px;
+        margin: 0px 0px 0px 0px;
         justify-content: space-around;
         flex-wrap: wrap;
     }
     .first-row span{
         font-size: 17px;
+        
     }
     .second-row{
         display: flex;
         flex-direction: row;
         flex-wrap: wrap; 
         width: 90%;
-        margin: 0px 0px 0px 100px;
+
+        margin: 10px 0px 0px 100px;
     }
     .second-row span{
         font-style: italic;
@@ -42,11 +46,11 @@
     .question{
     font-weight: 200;
     font-size: 15px;
-    margin:50px 0px 0px 50px
+    margin:30px 0px 0px 10px
     }
     .fourth-row{
     width: 800px;
-    margin: 20px 0px 0px 100px;
+    margin:30px 0px 0px 100px;
     height: auto;
     }
     .next-button{

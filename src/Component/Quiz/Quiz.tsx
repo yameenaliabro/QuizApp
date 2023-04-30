@@ -35,8 +35,8 @@ function Quiz(){
       incorrect_answers: [...eachQuestion.incorrect_answers, eachQuestion.correct_answer]
     }
   })
-  const passingPercentage = (correctAnswers / questions.length) * 75
-  const failurePercentage = (wrongAnswer / questions.length) * 75
+  const passingPercentage = (correctAnswers / questions.length) * 100
+  const failurePercentage = (wrongAnswer / questions.length) *100
   const handleNextQuestion = () => {
     setshowalert(undefined)
     setPass(null)
@@ -77,6 +77,9 @@ function Quiz(){
     <div className='contain-quiz'>
       {!showResult ? (
         <div className='app'>
+         <div className='bar'>
+          <Progress percent={(correctAnswers / questions.length) * 100} status="active"/>
+        </div>
           <div className='first-row'>
             <Title level={3}>Question {currentQuestionIndex + 1} /   of {questions.length}</Title>
             <span><FieldTimeOutlined />{seconds} seconds</span>
@@ -100,8 +103,8 @@ function Quiz(){
                     width: '300px',
                     height: 50,
                     backgroundColor: pass === null ? "white" : (
-                      option == selectedOption ? ( pass ? "green" : "red" ) : (
-                        questions[currentQuestionIndex].correct_answer === option ? "green" : "white"
+                      option == selectedOption ? ( pass ? "#40ff00" : "red" ) : (
+                        questions[currentQuestionIndex].correct_answer === option ? "#40ff00" : "white"
                         )
                     )
                   }}
@@ -133,7 +136,7 @@ function Quiz(){
         <div className='quiz-result'>
           <h2>Quiz Result</h2>
           <p>You scored {correctAnswers} out of {questions.length}</p>
-          <Progress percent={(correctAnswers / questions.length) * 75} status="active" type="circle" size={130} />
+          <Progress percent={(correctAnswers / questions.length) * 100} status="active" type="circle" size={130} />
         </div>
       )}
     </div>
