@@ -88,8 +88,7 @@ function Quiz(){
             <span className='question'>{questions[currentQuestionIndex].question.split(" ").sort()}</span>
           </div>
           <Row gutter={[8, 8]} style={{
-            marginTop: 20
-          }}>
+            marginTop: 60          }}>
             {questions[currentQuestionIndex].incorrect_answers.map((option, index) => (
               <Col xs={2} sm={8} md={8} lg={12} xl={12}>
                 <Button
