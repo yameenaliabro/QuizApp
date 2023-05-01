@@ -28,7 +28,7 @@ function Quiz(){
       }
     }, 1000);
     return () => clearInterval(interval);
-  }, [setCurrentQuestionIndex, seconds]);
+  }, [setCurrentQuestionIndex, seconds]);    
   const questions = questionsJson.map((eachQuestion) => {
     return {
       ...eachQuestion,
