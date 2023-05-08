@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Button, Progress, Typography, Col, Row, Rate, Popover, Modal } from 'antd';
+import { Button, Progress, Typography} from 'antd';
 import questionsJson from "../../Question/question.json"
-import "./Quiz.css"
+import "./quiz.css"
 import { FieldTimeOutlined } from '@ant-design/icons';
-import { ProgressBar } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import{  faStar } from '@fortawesome/free-solid-svg-icons';
 const { Title } = Typography;
-function Quiz(){
+function Quiz() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [selectedOption, setSelectedOption] = useState<string | undefined | boolean>(undefined);
   const [correctAnswers, setCorrectAnswers] = useState<number>(0);
@@ -15,6 +16,7 @@ function Quiz(){
   const [clicked, setclicked] = useState(false)
   const [pass, setPass] = useState<null | boolean | string>(null)
   const [wrongAnswer, setWrongAnswer] = useState(0)
+  const [value,setValue] = useState(1);
   useEffect(() => {
     const interval = setInterval(() => {
       if (seconds <= 0) {
@@ -28,28 +30,36 @@ function Quiz(){
       }
     }, 1000);
     return () => clearInterval(interval);
-  }, [setCurrentQuestionIndex, seconds]);    
+  }, [setCurrentQuestionIndex, seconds]);
   const questions = questionsJson.map((eachQuestion) => {
     return {
       ...eachQuestion,
       incorrect_answers: [...eachQuestion.incorrect_answers, eachQuestion.correct_answer]
-    }
+    } 
   })
   const passingPercentage = (correctAnswers / questions.length) * 100
-  const failurePercentage = (wrongAnswer / questions.length) *100
+  const precentage = passingPercentage;
+  const computerPercentage = precentage + 3;  
+  const redPercentage = computerPercentage > 53 ? 53 : computerPercentage;
+  const orangePercentage =
+    computerPercentage > 68 ? 68 - 50 : computerPercentage - 50;
+  const yellowPercentage =
+    computerPercentage > 78 ? 78 - 65 : computerPercentage - 65;
+  const greenPercentage =
+    computerPercentage > 103 ? 103 - 75 : computerPercentage - 75;
   const handleNextQuestion = () => {
     setshowalert(undefined)
     setPass(null)
-    console.log(pass)
     setSeconds(45)
     if (currentQuestionIndex === questions.length - 1) {
       setShowResult(true);
     } else {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }
+    } 
     setclicked(false)
   };
   const handleOptionSelect = (option: string) => {
+    setValue(value + 1)
     if (option === questions[currentQuestionIndex].correct_answer) {
       setPass(option)
       setCorrectAnswers(correctAnswers + 1)
@@ -65,72 +75,101 @@ function Quiz(){
     }
     setclicked(true)
   };
-  let content =(
-    <div>
-    <Rate count={3} defaultValue={1} /><label>1 Easy</label><br/>
-    <Rate count={3} defaultValue={2} /><label>2 Medium</label><br/>
-    <Rate count={3} defaultValue={3} /><label>3 Hard</label>
-    </div>
-  ) 
-  console.log({selectedOption, pass})
   return (
     <div className='contain-quiz'>
       {!showResult ? (
         <div className='app'>
-         <div className='bar'>
-          <Progress percent={(correctAnswers / questions.length) * 100} status="active"/>
-        </div>
+          <div className='bar'>
+            <Progress percent={(value  / questions.length) * 100} status="active" showInfo={false} />
+          </div>
           <div className='first-row'>
             <Title level={3}>Question {currentQuestionIndex + 1} /   of {questions.length}</Title>
             <span><FieldTimeOutlined />{seconds} seconds</span>
           </div>
+          <div className='star'>
+          <FontAwesomeIcon
+              style={{
+                color: questions[currentQuestionIndex].difficulty === 'easy' || questions[currentQuestionIndex].difficulty === "medium" || questions[currentQuestionIndex].difficulty === 'hard' ? '#FCA120' : '#dedede"'
+              }}
+            icon={faStar} />
+            <FontAwesomeIcon style={{
+                color:questions[currentQuestionIndex].difficulty==="medium" || questions[currentQuestionIndex].difficulty === 'hard' ? "#FCA120" : "#dedede"
+            }} icon={faStar} />
+            <FontAwesomeIcon style={{
+                color: questions[currentQuestionIndex].difficulty==="hard" ?'#FCA120' : "#dedede"
+            }} icon={faStar} />
+            </div>
           <div className='second-row'>
-            <Popover content={content} trigger="hover" placement='topLeft'>
-              <p><Rate defaultValue={2} count={3}/></p>
-          </Popover>
-            <span className='question'>{questions[currentQuestionIndex].question.split(" ").sort()}</span>
+            <span className='question'>
+              {decodeURIComponent(questions[currentQuestionIndex].question)}
+            </span>
           </div>
-          <Row gutter={[8, 8]} style={{
-            marginTop: 60          }}>
-            {questions[currentQuestionIndex].incorrect_answers.map((option, index) => (
-              <Col xs={2} sm={8} md={8} lg={12} xl={12}>
-                <Button
-                  disabled={clicked}
-                  key={index}
-                  style={{
-                    margin: '5px',
-                    color: "black",
-                    width: '300px',
-                    height: 50,
-                    backgroundColor: pass === null ? "white" : (
-                      option == selectedOption ? ( pass ? "#40ff00" : "red" ) : (
-                        questions[currentQuestionIndex].correct_answer === option ? "#40ff00" : "white"
+          <div className='main-container'>
+            <div className='main-contain'>
+              {questions[currentQuestionIndex].incorrect_answers.map((option, index) => (
+                <div className='middle-contain'>
+                  <Button
+                    disabled={clicked}
+                    key={index}
+                    style={{
+                      margin:5,
+                      color: "black",
+                      width: 230,
+                      height: 45,
+                      backgroundColor: pass === null ? "white" : (
+                        option == selectedOption ? (pass ? "green" : "red") : (
+                          questions[currentQuestionIndex].correct_answer === option ? "green" : "white"
                         )
-                    )
-                  }}
-                  onClick={() => handleOptionSelect(option)}
-                >
-                  {option}
-                </Button>
-              </Col>
-            ))}
-          </Row>
+                      )
+                      }} 
+                    onClick={() => handleOptionSelect(option)}>
+                    {decodeURIComponent(option)}
+                  </Button>
+                </div>
+              ))} 
+            </div>
+          </div>
           <div className='next-button'>
             <Button disabled={!clicked} onClick={handleNextQuestion} className='button'>
               Next
             </Button>
-            {(showalert != undefined) ? (showalert ? <p className='sucess'>Correct ?</p> : <p className='wrong'>Sorry ?</p>) : null}
+            <div>
+              {(showalert != undefined) ? (showalert ? <p className='sucess'>Correct ?</p> :
+                <p className='wrong'>Sorry ?</p>) : null}
+            </div>
           </div>
-          <div className='fourth-row'>
-            <ProgressBar style={{
-              height: 10
-            }}>
-              <ProgressBar striped variant="danger" now={failurePercentage} key={3} />
-              <ProgressBar variant="warning" now={passingPercentage == 50 && failurePercentage == 25 ? 15 : 0} key={2} />
-              <ProgressBar striped variant="success" now={passingPercentage} key={1} />
-
-            </ProgressBar>
-          </div>
+           <div className="progress-container">
+        <div
+          style={{
+            width: redPercentage + "%"
+          }}
+          className="progressInner progress-red"
+        />
+        {precentage > 50 && (
+          <div
+            style={{
+              width: orangePercentage + "%"
+            }}
+            className="progressInner progress-orange"
+          />
+        )}
+        {precentage > 65 && (
+          <div
+            style={{
+              width: yellowPercentage + "%"
+            }}
+            className="progressInner progress-yellow"
+          />
+        )}
+        {precentage >= 75 && (
+          <div
+            style={{
+              width: greenPercentage + "%"
+            }}
+            className="progressInner progress-green"
+          />
+        )}
+      </div>
         </div>
       ) : (
         <div className='quiz-result'>
