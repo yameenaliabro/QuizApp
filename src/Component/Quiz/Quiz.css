@@ -8,6 +8,15 @@
     align-items: center;
     height: 100vh;
 }
+.resultProgress {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 50px;
+    transition: 0.5s; 
+    
+}  
 .app {
     display: flex;
     flex-direction: column;
@@ -117,7 +126,7 @@ left: 40%;
 }
 .progress-container {
     border: 1px solid transparent;
-    width: 520px;
+    width: 640px;
     height: 32px;
     border-radius: 30px;
     position: relative;
@@ -126,41 +135,8 @@ left: 40%;
     position: absolute;
     top: 75%;
   }
-  .progressInner {
-    height: 100%;
-    height: 20px;
-    display: inline-block;
-    border-color: white;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 30px;
-  }
-  .progress-red {
-    background-color: #f8a46b;
-    position: relative;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 9;
-  }
-  .progress-orange {
-    background-color: #febd5c;
-    position: absolute;
-    left: 49%;
-    z-index: 8;
-  }
-  .progress-yellow {
-    background-color: #f6e763;
-    position: absolute;
-    left: 64%;
-    z-index: 7;
-  }
-  .progress-green {
-    background-color: #bae17c;
-    position: absolute;
-    left: 74%;
-    z-index: 6;
-  }
+ 
+
 @media only screen and (max-Width:650px){
     .contain-quiz {
         font-family: Arial, Helvetica, sans-serif;
@@ -241,49 +217,14 @@ left: 40%;
     }
     .progress-container {
         border: 1px solid transparent;
-        width: 500px;
+        width: 400px;
         height: 32px;
         border-radius: 30px;
         position: relative;
         display: inline-block;
         margin-top: 40px;
         position: absolute;
-        top: 90%;
-      }
-      .progressInner {
-        height: 100%;
-        height: 20px;
-        display: inline-block;
-        border-color: white;
-        border-width: 1px;
-        border-style: solid;
-        border-radius: 30px;
-      }
-      .progress-red {
-        background-color: #f8a46b;
-        position: relative;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 9;
-      }
-      .progress-orange {
-        background-color: #febd5c;
-        position: absolute;
-        left: 49%;
-        z-index: 8;
-      }
-      .progress-yellow {
-        background-color: #f6e763;
-        position: absolute;
-        left: 64%;
-        z-index: 7;
-      }
-      .progress-green {
-        background-color: #bae17c;
-        position: absolute;
-        left: 74%;
-        z-index: 6;
+        top: 93%;
       }
     .quiz-result {
         display: flex;

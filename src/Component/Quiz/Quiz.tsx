@@ -5,6 +5,7 @@ import "./quiz.css"
 import { FieldTimeOutlined } from '@ant-design/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import{  faStar } from '@fortawesome/free-solid-svg-icons';
+import { ResultProgress } from '../StatusBar/StatusBar';
 const { Title } = Typography;
 function Quiz() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
@@ -17,6 +18,11 @@ function Quiz() {
   const [pass, setPass] = useState<null | boolean | string>(null)
   const [wrongAnswer, setWrongAnswer] = useState(0)
   const [value,setValue] = useState(1);
+  let   [score,setscore] = useState<number>(0)
+  let   [currentPer, setCurrentPer] = useState(0)
+  let   [maxPer, setMaxPer] = useState(100)
+  let   [minPer, setMinPer] = useState(0)
+
   useEffect(() => {
     const interval = setInterval(() => {
       if (seconds <= 0) {
@@ -37,16 +43,27 @@ function Quiz() {
       incorrect_answers: [...eachQuestion.incorrect_answers, eachQuestion.correct_answer]
     } 
   })
-  const passingPercentage = (correctAnswers / questions.length) * 100
-  const precentage = passingPercentage;
-  const computerPercentage = precentage + 3;  
-  const redPercentage = computerPercentage > 53 ? 53 : computerPercentage;
-  const orangePercentage =
-    computerPercentage > 68 ? 68 - 50 : computerPercentage - 50;
-  const yellowPercentage =
-    computerPercentage > 78 ? 78 - 65 : computerPercentage - 65;
-  const greenPercentage =
-    computerPercentage > 103 ? 103 - 75 : computerPercentage - 75;
+    const data = [
+      {
+        val: 100,
+        color: 'green',
+  
+      },
+      {
+        val: currentPer,
+        color: 'yellow',
+  
+      },
+      {
+        val: maxPer,
+        color: "orange",
+  
+      },
+      {
+        val: minPer,
+        color: 'red'
+      }
+    ]
   const handleNextQuestion = () => {
     setshowalert(undefined)
     setPass(null)
@@ -59,10 +76,14 @@ function Quiz() {
     setclicked(false)
   };
   const handleOptionSelect = (option: string) => {
+    setMinPer(correctAnswers* 100 / questions.length)
+    setCurrentPer(correctAnswers * 100 / (currentQuestionIndex))
+    setMaxPer((correctAnswers +(questions.length - (currentQuestionIndex))) * 100 / questions.length)
     setValue(value + 1)
+    console.log(minPer)
     if (option === questions[currentQuestionIndex].correct_answer) {
       setPass(option)
-      setCorrectAnswers(correctAnswers + 1)
+      setCorrectAnswers(correctAnswers + 5)
       setSelectedOption(option)
       setshowalert(true)
       setPass(true)
@@ -139,37 +160,14 @@ function Quiz() {
             </div>
           </div>
            <div className="progress-container">
-        <div
-          style={{
-            width: redPercentage + "%"
-          }}
-          className="progressInner progress-red"
-        />
-        {precentage > 50 && (
-          <div
-            style={{
-              width: orangePercentage + "%"
-            }}
-            className="progressInner progress-orange"
-          />
-        )}
-        {precentage > 65 && (
-          <div
-            style={{
-              width: yellowPercentage + "%"
-            }}
-            className="progressInner progress-yellow"
-          />
-        )}
-        {precentage >= 75 && (
-          <div
-            style={{
-              width: greenPercentage + "%"
-            }}
-            className="progressInner progress-green"
-          />
-        )}
-      </div>
+           <div style={{ position: "absolute", bottom: "5px", left: "5px", width: "100%" }}>
+           <div style={{ display: "flex", flexDirection: "row", marginBottom: "5px", marginLeft: "25px", marginRight: "50px", justifyContent: "space-between" }}>
+                        <span>Score : {correctAnswers}%</span>
+                        <span>Max Score : {maxPer}%</span>
+                    </div>
+          <ResultProgress data={data.sort((x:any, y:any) => y.val - x.val)} />
+        </div>
+       </div>
         </div>
       ) : (
         <div className='quiz-result'>
